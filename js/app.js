@@ -83,10 +83,11 @@ function initMap() {
       // Create an onclick event to open an infowindow at each marker.
       marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
+        stopAnimation();
         this.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function(){this.setAnimation(null); }, 1400);
+        //setTimeout(function(){this.marker.setAnimation(null); }, 1400);
       });
-      //stops the animation after approx 2 bounces - credit: https://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
+
 
 
       bounds.extend(markers[i].position);
@@ -111,8 +112,12 @@ function initMap() {
     }
   }
 
-
-
+//loops through markers array and stops animations
+  stopAnimation = function(){
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setAnimation(null);
+    }
+  };
 
 
   // Activates knockout.js

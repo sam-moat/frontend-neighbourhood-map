@@ -22,8 +22,8 @@
 
             <hr>
             <div>
-              <input id="zoom-to-area-text" type="text" placeholder="Search the list of locations below">
-              <input id="zoom-to-area" type="button" value="Search">
+              <input id="zoom-to-area-text" type="search" placeholder="Search the list of locations below" data-bind="value: query, valueUpdate: 'keyup'" autocomplete="off">
+              
             </div>
             <ul class="" data-bind="foreach: placeList">
               <li class=""  data-bind="text: title, click: $parent.clickPlace"></li>

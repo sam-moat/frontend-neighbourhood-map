@@ -10,6 +10,7 @@ var Place = function(data) {
 
 function AppViewModel() {
   var self = this;
+  this.query = ko.observable('');
   //creates observable array
   this.placeList = ko.observableArray([]);
   //pushes each location into obervable array
@@ -19,12 +20,31 @@ function AppViewModel() {
 
 //animates the selected marker
   this.clickPlace = function(place){
-    console.log(place.marker.title);
+    //console.log(place.marker.title);
     google.maps.event.trigger(place.marker, 'click');
   };
 
-  // a click on a list view item activates the corresponding map marker
-  // http://knockoutjs.com/documentation/click-binding.html#note-1-passing-a-current-item-as-a-parameter-to-your-handler-function
+
+  this.filteredItems = ko.computed(function() {
+    var filter = self.query().toLowerCase();
+    //console.log(filter);
+     if (!filter) {
+       //console.log(self.placeList());
+        return self.placeList();
+    } else {
+        return ko.utils.arrayFilter(self.placeList(), function(place) {
+            return stringStartsWith(place.title.toLowerCase, filter);
+        });
+
+
+    }
+}, self);
+
+
+
+
+
+
 
   // filtering of the locations (focus on the list view items first before synchronizing with the markers)
   // http://knockoutjs.com/documentation/computedObservables.html
@@ -118,6 +138,13 @@ function initMap() {
       markers[i].setAnimation(null);
     }
   };
+//replacement for stringStartsWith which was removed from KO. credit: https://stackoverflow.com/questions/28042344/filter-using-knockoutjs
+  var stringStartsWith = function (string, startsWith) {
+    string = string || "";
+    if (startsWith.length > string.length)
+        return false;
+    return string.substring(0, startsWith.length) === startsWith;
+};
 
 
   // Activates knockout.js

@@ -4,8 +4,8 @@ var map;
 var markers = [];
 
 var Place = function(data) {
-  this.title = ko.observable(data.title);
-  this.location = ko.observable(data.location);
+  this.title = data.title;
+  this.location = data.location;
 };
 
 function AppViewModel() {
@@ -24,27 +24,28 @@ function AppViewModel() {
     google.maps.event.trigger(place.marker, 'click');
   };
 
-
+//filters the locations and markers using the input from the searchbar
   this.filteredItems = ko.computed(function() {
     var filter = self.query().toLowerCase();
-    //console.log(filter);
-     if (!filter) {
+    /*console.log(filter);
+     //if (!filter) {
        //console.log(self.placeList());
-        return self.placeList();
-    } else {
+      //  return self.placeList();
+    //} else { */
         return ko.utils.arrayFilter(self.placeList(), function(place) {
-            return stringStartsWith(place.title.toLowerCase, filter);
+          var match = place.title.toLowerCase().indexOf(filter) !== -1;
+          if(place.marker) {
+            place.marker.setVisible(match);
+          }
+            return match;
         });
 
 
-    }
+  //  }
 }, self);
 
 
-
-
-
-
+// TODO: Need to hide the marker infowindow after someone has changed their search
 
   // filtering of the locations (focus on the list view items first before synchronizing with the markers)
   // http://knockoutjs.com/documentation/computedObservables.html
@@ -138,6 +139,8 @@ function initMap() {
       markers[i].setAnimation(null);
     }
   };
+
+/*
 //replacement for stringStartsWith which was removed from KO. credit: https://stackoverflow.com/questions/28042344/filter-using-knockoutjs
   var stringStartsWith = function (string, startsWith) {
     string = string || "";
@@ -145,10 +148,9 @@ function initMap() {
         return false;
     return string.substring(0, startsWith.length) === startsWith;
 };
-
+*/
 
   // Activates knockout.js
-
 var appViewModel = new AppViewModel();
 
 ko.applyBindings(appViewModel);

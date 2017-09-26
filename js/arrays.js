@@ -1,5 +1,5 @@
 // locations to be used on the map
-var locations =  [{
+var locations = [{
         title: 'Christchurch',
         location: {
             lat: -43.532054,
@@ -72,65 +72,65 @@ var locations =  [{
 ];
 
 //styles the map
-    var styles = [{
-            "featureType": "landscape.natural",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                    "visibility": "on"
-                },
-                {
-                    "color": "#e0efef"
-                }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "geometry.fill",
-            "stylers": [{
-                    "visibility": "on"
-                },
-                {
-                    "hue": "#1900ff"
-                },
-                {
-                    "color": "#c0e8e8"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "geometry",
-            "stylers": [{
-                    "lightness": 100
-                },
-                {
-                    "visibility": "simplified"
-                }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "labels",
-            "stylers": [{
+var styles = [{
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [{
                 "visibility": "on"
-            }]
-        },
-        {
-            "featureType": "transit.line",
-            "elementType": "geometry",
-            "stylers": [{
-                    "visibility": "on"
-                },
-                {
-                    "lightness": 700
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [{
-                "color": "#7dcdcd"
-            }]
-        }
-    ];
+            },
+            {
+                "color": "#e0efef"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry.fill",
+        "stylers": [{
+                "visibility": "on"
+            },
+            {
+                "hue": "#1900ff"
+            },
+            {
+                "color": "#c0e8e8"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{
+                "lightness": 100
+            },
+            {
+                "visibility": "simplified"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [{
+            "visibility": "on"
+        }]
+    },
+    {
+        "featureType": "transit.line",
+        "elementType": "geometry",
+        "stylers": [{
+                "visibility": "on"
+            },
+            {
+                "lightness": 700
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [{
+            "color": "#7dcdcd"
+        }]
+    }
+];

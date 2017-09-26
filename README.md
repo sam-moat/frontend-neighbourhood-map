@@ -1,6 +1,6 @@
 # neighbourhood-map-project
 
-##Description
+## Description
 This app was created as part of [Udacity](http://www.udacity.com)'s Front End Developer Nanodegree Programme.
 
 It is designed to help you explore some of the tourist locations in New Zealand and see some of the associated latest news articles
@@ -11,7 +11,7 @@ To run the application, unzip the zip package and double click the index.html fi
 ## Using the app:
 To see the latest New York Times news for a location on the map:
 * click on the map marker or
-* click on the location name in the menu bar
+* click on the location name in the menu bar⋅⋅
 
 You can filter the locations using the search bar provided
 

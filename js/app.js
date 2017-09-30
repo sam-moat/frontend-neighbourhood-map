@@ -92,15 +92,15 @@ function initMap() {
         appViewModel.placeList()[i].marker = marker;
 
         // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-            stopAnimation();
-            this.setAnimation(google.maps.Animation.BOUNCE);
-        });
-
-
-
+        marker.addListener('click', markerClick);
+        //extends the bounds of the map to ensure you can see the marker
         bounds.extend(markers[i].position);
+    }
+    //handles the opening of the info window and animations on click
+    function markerClick() {
+      populateInfoWindow(this, largeInfowindow);
+      stopAnimation();
+      this.setAnimation(google.maps.Animation.BOUNCE);
     }
     // Extend the boundaries of the map for each marker
     map.fitBounds(bounds);

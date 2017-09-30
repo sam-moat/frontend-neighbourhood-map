@@ -1,13 +1,13 @@
-var map;
-
-// Create a new blank array for all the listing markers.
-var markers = [];
+var map,
+    largeInfowindow,
+    markers = []; // Create a new blank array for all the listing markers.
 
 var Place = function(data) {
     this.title = data.title;
     this.location = data.location;
 };
 
+//knockout viewmodel
 function AppViewModel() {
     var self = this;
     this.query = ko.observable('');
@@ -26,12 +26,11 @@ function AppViewModel() {
 
     //filters the locations and markers using the input from the searchbar
     this.filteredItems = ko.computed(function() {
+
         var filter = self.query().toLowerCase();
-        /*console.log(filter);
-         //if (!filter) {
-           //console.log(self.placeList());
-          //  return self.placeList();
-        //} else { */
+
+        if (filter) largeInfowindow.close();
+
         return ko.utils.arrayFilter(self.placeList(), function(place) {
             var match = place.title.toLowerCase().indexOf(filter) !== -1;
             if (place.marker) {
@@ -41,9 +40,7 @@ function AppViewModel() {
         });
 
 
-        //  }
     }, self);
-
 
 
 }
@@ -72,8 +69,7 @@ function initMap() {
     });
 
 
-
-    var largeInfowindow = new google.maps.InfoWindow();
+    largeInfowindow = new google.maps.InfoWindow();
     var bounds = new google.maps.LatLngBounds();
 
     // The following group uses the location array to create an array of markers on initialize.
@@ -100,7 +96,6 @@ function initMap() {
             populateInfoWindow(this, largeInfowindow);
             stopAnimation();
             this.setAnimation(google.maps.Animation.BOUNCE);
-            //setTimeout(function(){this.marker.setAnimation(null); }, 1400);
         });
 
 
@@ -119,7 +114,6 @@ function populateInfoWindow(marker, infowindow) {
     if (infowindow.marker != marker) {
         //New York Times API request
         var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + marker.title + "&sort=newest&api-key=16cfed740ab04b5aa04a888e07ff7144";
-        //console.log(url);
 
         //error handling for New York Times API request
         $.ajaxSetup({
@@ -131,26 +125,26 @@ function populateInfoWindow(marker, infowindow) {
         $.getJSON(url, function(data) {
             //populates the infowindow with API response
             articles = data.response.docs;
-            for (var i = 0; i < articles.length; i++) {
-                var article = articles[i];
-                infowindow.setContent('<h3>Latest from the New York Times about ' + marker.title + ':</h3>' + '<li class="article">' + '<a href="' + article.web_url + '">' + article.headline.main + '</a>' + '<p>' + article.snippet + '</p>' + '</li>');
-            }
+
+
+            infowindow.setContent('<h3>Latest from the New York Times about ' +
+                marker.title + ':</h3>' + '<li class="article">' +
+                '<a href="' + articles[0].web_url + '">' +
+                articles[0].headline.main + '</a>' +
+                '<p>' + articles[0].snippet + '</p>' + '</li>');
+
+            infowindow.marker = marker;
+            //infowindow.setContent('<div>' + marker.title + '</div>');
+
+            infowindow.open(map, marker);
+            // Make sure the marker property is cleared if the infowindow is closed.
+            infowindow.addListener('closeclick', function() {
+                infowindow.setMarker = null;
+            });
 
 
         });
-        /*.error(function(e) {
-            infowindow.setContent('News article could not be loaded');
-        }); */
 
-
-        infowindow.marker = marker;
-        //infowindow.setContent('<div>' + marker.title + '</div>');
-
-        infowindow.open(map, marker);
-        // Make sure the marker property is cleared if the infowindow is closed.
-        infowindow.addListener('closeclick', function() {
-            infowindow.setMarker = null;
-        });
     }
 }
 
@@ -161,15 +155,7 @@ stopAnimation = function() {
     }
 };
 
-/*
-//replacement for stringStartsWith which was removed from KO. credit: https://stackoverflow.com/questions/28042344/filter-using-knockoutjs
-  var stringStartsWith = function (string, startsWith) {
-    string = string || "";
-    if (startsWith.length > string.length)
-        return false;
-    return string.substring(0, startsWith.length) === startsWith;
-};
-*/
+
 
 // Activates knockout.js
 var appViewModel = new AppViewModel();

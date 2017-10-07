@@ -98,9 +98,9 @@ function initMap() {
     }
     //handles the opening of the info window and animations on click
     function markerClick() {
-      populateInfoWindow(this, largeInfowindow);
-      stopAnimation();
-      this.setAnimation(google.maps.Animation.BOUNCE);
+        populateInfoWindow(this, largeInfowindow);
+        stopAnimation();
+        this.setAnimation(google.maps.Animation.BOUNCE);
     }
     // Extend the boundaries of the map for each marker
     map.fitBounds(bounds);
@@ -118,6 +118,7 @@ function populateInfoWindow(marker, infowindow) {
         //error handling for New York Times API request
         $.ajaxSetup({
             "error": function() {
+                infowindow.open(map, marker);
                 infowindow.setContent('News article could not be loaded');
             }
         });
@@ -156,8 +157,14 @@ stopAnimation = function() {
 };
 
 
-
 // Activates knockout.js
 var appViewModel = new AppViewModel();
 
 ko.applyBindings(appViewModel);
+
+//alerts an error if map fails to load
+function mapError() {
+    alert(
+        'There was an issue loading the Google Map. Please try again or see the console for more information'
+    );
+}

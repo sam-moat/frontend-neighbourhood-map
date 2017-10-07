@@ -13,8 +13,8 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 menu-bar">
+        <section class="row">
+            <article class="col-xs-12 col-sm-4 menu-bar">
                 <h1>View the New Zealand Tourist Locations</h1>
 
                 <hr>
@@ -25,13 +25,13 @@
                 <ul class="" data-bind="foreach: filteredItems">
                     <li class="" data-bind="text: title, click: $parent.clickPlace"></li>
                 </ul>
+            </article>
 
-            </div>
-            <div class="map-container col-xs-12 col-sm-8">
+            <article class="map-container col-xs-12 col-sm-8">
                 <div id="map"></div>
-            </div>
+            </article>
 
-        </div>
+        </section>
 
     </div>
 
@@ -41,7 +41,7 @@
     <script src="js/arrays.js"></script>
     <script src="js/app.js"></script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFy2ctdlKI11iGNtlIPVm_SuOpWP-sohs&v=3&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFy2ctdlKI11iGNtlIPVm_SuOpWP-sohs&v=3&callback=initMap" onerror="mapError()"></script>
 
 
 </body>
